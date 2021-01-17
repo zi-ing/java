@@ -2,7 +2,7 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 class Player {
-  private String name;// 人物
+  private String name;// 人物名稱
   private int po;// 人物位置
   private int hp;// 玩家血量
   private int live;// 玩家是否活著
