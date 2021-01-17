@@ -1,0 +1,727 @@
+import java.util.InputMismatchException;
+import java.util.Scanner;
+
+class Player {
+  private String name;// 人物
+  private int po;// 人物位置
+  private int hp;// 玩家血量
+  private int live;// 玩家是否活著
+  private int gym1;// 第一道館徽章
+  private int gym2;// 第二道館徽章
+  private int gym3;// 第三道館徽章
+  private int gym4;// 第四道館徽章
+  private int gym_complete;// 打倒道館數量
+  private int status;// 玩家狀態
+
+  public void setname(String name) {
+    this.name = name;
+  }
+
+  public String getname() {
+    return this.name;
+  }
+
+  public void setpo(int po) {
+    this.po = po;
+  }
+
+  public int getpo() {
+    return this.po;
+  }
+
+  public void sethp(int hp) {
+    this.hp = hp;
+  }
+
+  public int gethp() {
+    return this.hp;
+  }
+
+  public void setlive(int live) {
+    this.live = live;
+  }
+
+  public int getlive() {
+    return this.live;
+  }
+
+  // 玩家道館狀態輸入輸出
+  public void setgym1(int gym1) {
+    this.gym1 = gym1;
+  }
+
+  public int getgym1() {
+    return this.gym1;
+  }
+
+  public void setgym2(int gym2) {
+    this.gym2 = gym2;
+  }
+
+  public int getgym2() {
+    return this.gym2;
+  }
+
+  public void setgym3(int gym3) {
+    this.gym3 = gym3;
+  }
+
+  public int getgym3() {
+    return this.gym3;
+  }
+
+  public void setgym4(int gym4) {
+    this.gym4 = gym4;
+  }
+
+  public int getgym4() {
+    return this.gym4;
+  }
+
+  public void setgym_complete(int gym_complete) {
+    this.gym_complete = gym_complete;
+  }
+
+  public int getgym_complete() {
+    return this.gym_complete;
+  }
+
+  // 玩家狀態輸入輸出
+  public void setstatus(int status) {
+    this.status = status;
+  }
+
+  public int getstatus() {
+    return this.status;
+  }
+}
+
+// 寶可夢的class
+class Pokemon {
+  private String name;// 寶可夢名稱
+  private int cost;// 寶可夢血量
+  private int owner;// 持有者 0為A 1為B 2為C 3為D 99為沒人或無法持有
+  private int gym;// 道館
+  private int evo;// 寶可夢進化
+
+  public void setname(String name) {
+    this.name = name;
+  }
+
+  public String getname() {
+    return this.name;
+  }
+
+  public void setcost(int cost) {
+    this.cost = cost;
+  }
+
+  public int getcost() {
+    return this.cost;
+  }
+
+  public void setowner(int owner) {
+    this.owner = owner;
+  }
+
+  public int getowner() {
+    return this.owner;
+  }
+
+  public void setgym(int gym) {
+    this.gym = gym;
+  }
+
+  public int getgym() {
+    return this.gym;
+  }
+
+  public void setevo(int evo) {
+    this.evo = evo;
+  }
+
+  public int getevo() {
+    return this.evo;
+  }
+}
+
+class chance {
+  private String name;
+  private int blood;
+
+  public void setname(String name) {
+    this.name = name;
+  }
+
+  public String getname() {
+    return this.name;
+  }
+
+  public void setblood(int blood) {
+    this.blood = blood;
+  }
+
+  public int getblood() {
+    return this.blood;
+  }
+
+}
+
+class fortune {
+  private String name;
+  private int blood;
+
+  public void setname(String name) {
+    this.name = name;
+  }
+
+  public String getname() {
+    return this.name;
+  }
+
+  public void setblood(int blood) {
+    this.blood = blood;
+  }
+
+  public int getblood() {
+    return this.blood;
+  }
+}
+
+class Main {
+  static String[] pokemon_name_1 = { "　　起　點　　", "　小　火　龍　", "　火　球　鼠　", "　　機　會　　", "　道　館　一　", "　火　雉　雞　", "　火箭隊出口　",
+      "　傑　尼　龜　", "　小　鋸　鱷　", "　水　躍　魚　", "　道　館　二　", "　蚊香　蝌蚪　", "　寶可夢中心　", "　皮　　　丘　", "　小　磁　怪　", "　電　擊　怪　", "　道　館　三　",
+      "　咩　利　羊　", "　火箭隊入口　", "　妙蛙　種子　", "　菊　草　葉　", "　　命　運　　", "　道　館　四　", "　木　守　宮　" };
+  static String[] pokemon_name_2 = { "　　起　點　　", "　火　恐　龍　", "　火　岩　鼠　", "　　機　會　　", "　道　館　一　", "　力　壯　雞　", "　火箭隊出口　",
+      "　卡　咪　龜　", "　藍　　　鱷　", "　沼　躍　魚　", "　道　館　二　", "　蚊　香　蛙　", "　寶可夢中心　", "　皮　卡　丘　", "　三合一磁怪　", "　電　擊　獸　", "　道　館　三　",
+      "　茸　茸　羊　", "　火箭隊入口　", "　妙　蛙　草　", "　月　桂　葉　", "　　命　運　　", "　道　館　四　", "　森林　蜥蜴　" };
+  static String[] pokemon_name_3 = { "　　起　點　　", "　噴　火　龍　", "　火　爆　獸　", "　　機　會　　", "　道　館　一　", "　火　焰　雞　", "　火箭隊出口　",
+      "　水　箭　龜　", "　大　力　鱷　", "　巨　沼　王　", "　道　館　二　", "　蚊香　泳士　", "　寶可夢中心　", "　雷　　　丘　", "　自爆　磁怪　", "　電擊　魔獸　", "　道　館　三　",
+      "　　電　龍　　", "　火箭隊入口　", "　妙　蛙　花　", "　大　菊　花　", "　　命　運　　", "　道　館　四　", "　蜥　蜴　王　" };
+  static int[] pokemon_cost = { 0, 1000, 1100, 0, 0, 1200, 0, 1400, 1600, 1800, 0, 1500, 0, 2200, 2500, 2800, 0, 3000,
+      0, 3500, 4000, 0, 0, 5000 };// 寶可夢血量
+  static int[] pokemon_owner = { 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99,
+      99, 99 };// 持有人 99為無持有人 0是玩家a 1玩家b 2玩家c 3玩家d
+  static int[] pokemon_evo = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };// 寶可夢進化階段
+  static int[] pokemon_gym = { 3000, 4500, 6000, 7000 };// 道館血量
+
+  static String[] chance_name = { "　　　　　　　　　　　　　　　　　　　　　　　　", "能量飲料加２０００血　　　　　　　　　　　　　　",
+      "找喬伊小姐加５００血　　　　　　　　　　　　　　", "優秀訓練家加８００血　　　　　　　　　　　　　　" };
+  static int[] chance_blood = { 0, 2000, 500, 800 };
+
+  static String[] fortune_name = { "　　　　　　　　　　　　　　　　　　　　　　　　", "被風速狗咬扣５００血　　　　　　　　　　　　　　", "遇到神獸扣２０００血　　　　　　　　　　　　　　",
+      "遇到地震扣１０００血　　　　　　　　　　　　　　" };
+  static int[] fortune_blood = { 0, -500, -2000, -1000 };
+
+  static String[] no = { "０", "１", "２", "３", "４", "５", "６", "７", "８", "９" };// 全形數字
+  static String[] pokemon_cost_print = new String[24];// 顯示寶可夢血量
+  static String[] pokemon_owner_print = new String[24];// 顯示寶可夢擁有者
+  static String[] pokemon_gym_print = new String[4];// 顯示道館血量
+  static String[] player_hp_print = new String[4];// 顯示玩家血量
+  static String[] player_po_print = new String[24];// 顯示玩家位置
+  static String[] player_gym_print = new String[4];// 顯示玩家持有徽章
+  static String chance_print = "";// 顯示機會事件
+  static String fortune_print = "";// 顯示命運事件
+
+  public static void print_board(Player[] user, Pokemon[] poke) {
+    System.out.println("－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－");
+    System.out.println("　　　　　　　｜" + poke[13].getname() + "｜" + poke[14].getname() + "｜" + poke[15].getname() + "｜"
+        + poke[16].getname() + "｜" + poke[17].getname() + "｜　　　　　　　");
+    System.out.println(poke[12].getname() + "｜　" + pokemon_cost_print[13] + "　｜　" + pokemon_cost_print[14] + "　｜　"
+        + pokemon_cost_print[15] + "　｜　" + pokemon_gym_print[2] + "　｜　" + pokemon_cost_print[17] + "　｜"
+        + poke[18].getname());
+    System.out.println(pokemon_owner_print[12] + "｜" + pokemon_owner_print[13] + "｜" + pokemon_owner_print[14] + "｜"
+        + pokemon_owner_print[15] + "｜" + pokemon_owner_print[16] + "｜" + pokemon_owner_print[17] + "｜"
+        + pokemon_owner_print[18]);
+    System.out.println(player_po_print[12] + "｜" + player_po_print[13] + "｜" + player_po_print[14] + "｜"
+        + player_po_print[15] + "｜" + player_po_print[16] + "｜" + player_po_print[17] + "｜" + player_po_print[18]);
+    System.out.println("－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－");
+    System.out.println(poke[11].getname() + "｜　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　｜" + poke[19].getname());
+    System.out.println(
+        "　" + pokemon_cost_print[11] + "　｜　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　｜　" + pokemon_cost_print[19] + "　");
+    System.out.println(pokemon_owner_print[11] + "｜　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　｜" + pokemon_owner_print[19]);
+    System.out.println(player_po_print[11] + "｜　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　｜" + player_po_print[19]);
+    System.out.println("－－－－－－－－　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　－－－－－－－－");
+    System.out.println(poke[10].getname() + "｜　　　　　　　機會：" + chance_print + "　　　　　｜" + poke[20].getname());
+    System.out
+        .println("　" + pokemon_gym_print[1] + "　｜　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　｜　" + pokemon_cost_print[20]);
+    System.out.println(pokemon_owner_print[10] + "｜　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　｜" + pokemon_owner_print[20]);
+    System.out.println(player_po_print[10] + "｜　　　　　　　命運：" + fortune_print + "　　　　　｜" + player_po_print[20]);
+    System.out.println("－－－－－－－－　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　－－－－－－－－");
+    System.out.println(poke[9].getname() + "｜　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　｜　　　　　　　");
+    System.out.println("　" + pokemon_cost_print[9] + "　｜　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　｜" + poke[21].getname());
+    System.out.println(pokemon_owner_print[9] + "｜　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　｜" + pokemon_owner_print[21]);
+    System.out.println(player_po_print[9] + "｜　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　｜" + player_po_print[21]);
+    System.out.println("－－－－－－－－　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　－－－－－－－－");
+    System.out.println(poke[8].getname() + "｜　　　　　玩　家　Ａ　　　玩　家　Ｂ　　　玩　家　Ｃ　　　玩　家　Ｄ　　　　　｜" + poke[22].getname());
+    System.out.println("　" + pokemon_cost_print[8] + "　｜　　　　　" + player_hp_print[0] + "　　　" + player_hp_print[1] + "　　　"
+        + player_hp_print[2] + "　　　" + player_hp_print[3] + "　　　　　｜　" + pokemon_gym_print[3]);
+    System.out.println(pokemon_owner_print[8] + "｜　　徽章：" + player_gym_print[0] + "　　　" + player_gym_print[1] + "　　　"
+        + player_gym_print[2] + "　　　" + player_gym_print[3] + "　　　　　｜　" + pokemon_owner_print[22]);
+    System.out.println(player_po_print[8] + "｜　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　｜" + player_po_print[22]);
+    System.out.println("－－－－－－－－　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　－－－－－－－－");
+    System.out.println(poke[7].getname() + "｜　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　｜" + poke[23].getname());
+    System.out
+        .println("　" + pokemon_cost_print[7] + "　｜　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　｜　" + pokemon_cost_print[23]);
+    System.out.println(pokemon_owner_print[7] + "｜　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　｜" + pokemon_owner_print[23]);
+    System.out.println(player_po_print[7] + "｜　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　｜" + player_po_print[23]);
+    System.out.println("－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－");
+    System.out.println("　　　　　　　｜" + poke[5].getname() + "｜" + poke[4].getname() + "｜　　　　　　　｜" + poke[2].getname() + "｜"
+        + poke[1].getname() + "｜　　＜－　　　");
+    System.out.println(poke[6].getname() + "｜　" + pokemon_cost_print[5] + "　｜　" + pokemon_gym_print[0] + "　｜"
+        + poke[3].getname() + "｜　" + pokemon_cost_print[2] + "　｜　" + pokemon_cost_print[1] + "　｜" + poke[0].getname());
+    System.out.println(pokemon_owner_print[6] + "｜" + pokemon_owner_print[5] + "｜" + pokemon_owner_print[4] + "｜"
+        + pokemon_owner_print[3] + "｜" + pokemon_owner_print[2] + "｜" + pokemon_owner_print[1] + "｜"
+        + pokemon_owner_print[0]);
+    System.out.println(player_po_print[6] + "｜" + player_po_print[5] + "｜" + player_po_print[4] + "｜"
+        + player_po_print[3] + "｜" + player_po_print[2] + "｜" + player_po_print[1] + "｜" + player_po_print[0]);
+    System.out.println("－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－");
+  }
+
+  public static void main(String[] args) {
+    int i = 0;// 玩家順序
+    int dice = 0;// 骰子
+    int player_qty = 0;// 玩家總數
+    int final_qty = 0;// 正在遊玩玩家總數
+    int winner = 0;// 計算第幾號玩家是贏家
+    int turn = 1;// 當前回合數
+    Player[] user = new Player[4];
+    Pokemon[] poke = new Pokemon[24];
+
+    Scanner sc = new Scanner(System.in);
+
+    while (player_qty < 1 || player_qty > 4) {
+      System.out.print("請輸入人數(1到4)：");// 輸入遊玩人數
+      player_qty = sc.nextInt();
+    }
+
+    final_qty = player_qty;// 當前遊玩玩家=玩家總數
+    // player為計算有玩的所有玩家用的，就算死掉了也不會變，用於跳下一回合及計算贏家
+    // final是計算存活人數用的，當存活為一人時結束遊戲
+    // 只用一個qty會有bug，所以加上final
+
+    // 輸入玩家初值
+    for (int j = 0; j <= 3; j++) {
+      user[j] = new Player();
+      user[j].setpo(0);// 初始為起點
+      user[j].sethp(20000);// 初始血量
+      user[j].setlive(1);// 生命狀態為活著
+      user[j].setgym1(0);
+      user[j].setgym2(0);
+      user[j].setgym3(0);
+      user[j].setgym4(0);
+      user[j].setgym_complete(0);
+      if (j > player_qty - 1) {
+        user[j].setlive(0);// 多出來的玩家，生命狀態設為死亡
+      }
+    }
+
+    for (int j = 0; j < player_qty; j++) {// 有遊玩的玩家可輸入名字
+      System.out.print("玩家" + (j + 1) + "請輸入你的名字：");
+      user[j].setname(sc.next());
+      System.out.println("");// 空一行
+    }
+
+    // 輸入格子初值
+    for (int j = 0; j <= 23; j++) {
+      poke[j] = new Pokemon();
+      poke[j].setname(pokemon_name_1[j]);
+      poke[j].setcost(pokemon_cost[j]);
+      poke[j].setowner(pokemon_owner[j]);
+      poke[j].setevo(pokemon_evo[j]);
+    }
+
+    for (int j = 0; j <= 3; j++) {
+      poke[j].setgym(pokemon_gym[j]);
+    }
+
+    // 遊戲開始
+    while (final_qty > 1) {// 當玩家剩一個的時候，跳出迴圈
+      if (user[i].getlive() == 1) {// 玩家是否活著，活著則繼續
+        sc.nextLine();
+        System.out.println("現在是第" + turn + "回合，輪到" + user[i].getname() + "：");
+        dice = 0;// 骰子歸0
+        chance_print = chance_name[0];// 機會顯示重置
+        fortune_print = fortune_name[0];// 命運顯示重置
+
+        // 如果被火箭隊抓住
+        if (user[i].getpo() == 18) {
+          int rocket_dice = 0;
+          System.out.println("你已被火箭隊抓住");
+          if (dice == 0) {
+            rocket_dice = (int) (Math.random() * 6) + 1;// 擲火箭隊骰子，若大於5可逃脫
+            System.out.println("骰子數為：" + rocket_dice);// 顯示火箭隊骰子數字
+          }
+          if (rocket_dice >= 5) {// 火箭隊骰子大於5
+            System.out.println("骰子數大於5，恭喜從火箭隊逃脫");
+            user[i].setpo(6);// 移到火箭隊出口
+          } else {// 火箭隊骰子小於5
+            System.out.println("逃脫失敗");
+          }
+        } else {// 如果是正常狀況
+          dice = (int) (Math.random() * 6) + 1;// 骰子1到6
+          System.out.println("骰子數為：" + dice);// 顯示骰子數字
+          user[i].setpo(user[i].getpo() + dice);// 移動骰子的數字
+          if (user[i].getpo() == 18) {// 如果走到第18格
+            System.out.println("你被火箭隊抓住了");
+          }
+        }
+
+        // 如果經過起點
+        if (user[i].getpo() > 23) {// 如果超過23就從0開始算
+          user[i].setpo(user[i].getpo() - 24);// 重置玩家當前所在格子數
+          user[i].sethp(user[i].gethp() + 2000);// 玩家血量+2000
+          System.out.println("經過起點回2000血");
+        }
+
+        System.out.println("位置為：" + poke[user[i].getpo()].getname()); // 顯示當前位置
+        String buy = "";
+
+        // 如果遇到自己的寶可夢
+        if (poke[user[i].getpo()].getowner() == i) {// 判斷寶可夢擁有者是否為當前玩家
+          poke[user[i].getpo()].setcost(poke[user[i].getpo()].getcost() + 500);// 玩家那格的寶可夢+500血量
+          poke[user[i].getpo()].setevo(poke[user[i].getpo()].getevo() + 1);// 玩家寶可夢進化
+          if (poke[user[i].getpo()].getevo() == 1) {// 如果寶可夢進化到第二階
+            poke[user[i].getpo()].setname(pokemon_name_2[user[i].getpo()]);
+            System.out.println("你的" + pokemon_name_1[user[i].getpo()] + "進化成" + poke[user[i].getpo()].getname() + "了");
+            System.out.println("血量提升到" + poke[user[i].getpo()].getcost() + "血");
+          } else if (poke[user[i].getpo()].getevo() == 2) {// 如果寶可夢進化到第三階
+            poke[user[i].getpo()].setname(pokemon_name_3[user[i].getpo()]);
+            System.out.println("你的" + pokemon_name_2[user[i].getpo()] + "進化成" + poke[user[i].getpo()].getname() + "了");
+            System.out.println("血量提升到" + poke[user[i].getpo()].getcost() + "血");
+          } else {
+            System.out.println("你的" + poke[user[i].getpo()].getname() + "變強了");
+            System.out.println(poke[user[i].getpo()].getname() + "增強為" + poke[user[i].getpo()].getcost() + "血");
+          }
+        }
+
+        // 如果遇到野生寶可夢
+        while (poke[user[i].getpo()].getowner() == 99 && poke[user[i].getpo()].getcost() != 0 && buy.equals("")) {// 判斷寶可夢是否無擁有者，且寶可夢血量不為0，同時還要是可捕捉的格子
+          System.out.println("野生的" + poke[user[i].getpo()].getname() + "出現了");
+          System.out.println("目前血量為：" + user[i].gethp());
+          if (user[i].gethp() > poke[user[i].getpo()].getcost()) {// 如果玩家血量足夠，大於寶可夢
+            System.out.print("是否捕捉這隻寶可夢？(輸入y或n)：");
+            buy = sc.next();
+          } else {// 否則不可捕捉
+            System.out.println("血量不足無法捕捉");
+            buy = "n";
+          }
+
+          if (buy.equals("y")) {// 如果玩家要捕捉
+            user[i].sethp(user[i].gethp() - poke[user[i].getpo()].getcost());// 玩家血量減去寶可夢的血量
+            poke[user[i].getpo()].setowner(i);// 寶可夢擁有者變為當回合玩家
+            System.out.println("恭喜捕捉成功");
+          } else if (buy.equals("n")) {// 如果玩家不捕捉
+            System.out.println(poke[user[i].getpo()].getname() + "逃走了");
+          } else {// 如果玩家輸入y或n以外的
+            System.out.println("請重新輸入");
+            System.out.println("");
+            buy = "";
+          }
+          sc.nextLine();
+        }
+
+        // 如果遇到其他玩家的寶可夢
+        if (poke[user[i].getpo()].getowner() != i && poke[user[i].getpo()].getcost() != 0
+            && poke[user[i].getpo()].getowner() != 99) {// 判斷此格並非當前玩家所擁有，且血量不為0(否則此格不是寶可夢)，且並非野生寶可夢
+          user[i].sethp(user[i].gethp() - poke[user[i].getpo()].getcost());//當前玩家扣除此格寶可夢的血量
+          System.out.println("被" + poke[user[i].getpo()].getname() + "攻擊了");
+          user[poke[user[i].getpo()].getowner()].sethp(user[poke[user[i].getpo()].getowner()].gethp()+poke[user[i].getpo()].getcost());//此格寶可夢的擁有者加上此格寶可夢的血量
+          System.out.println(user[poke[user[i].getpo()].getowner()].getname() + "回復" + poke[user[i].getpo()].getcost() + "血");
+        }
+
+        // 如果走到道館1
+        while (user[i].getpo() == 4 && user[i].getgym1() == 0) {// 判斷當前為第4格，且玩家尚未擁有此道館徽章
+          int power = 0;// 戰鬥力加總
+          for (int j = 0; j <= 23; j++) {// 判斷所有的格子，如果是玩家所擁有的寶可夢，則將擁有的寶可夢血量加起來
+            if (poke[j].getowner() == i) {
+              power += poke[j].getcost();
+            }
+          }
+          // 如果戰力加總大於道館戰力則獲勝
+          if (power >= poke[0].getgym()) {// 如果戰勝道館
+            user[i].setgym1(1);// 給予當前玩家此道館徽章
+            user[i].setgym_complete(user[i].getgym_complete() + 1);// 當前玩家徽章擁有數+1
+            System.out.println("恭喜你打贏道館！！");
+            System.out.println("目前徽章數為" + user[i].getgym_complete());
+          } else {// 如果打輸道館
+            user[i].setpo(12);// 將當前玩家送到寶可夢中心
+            System.out.println("挑戰道館失敗，回到寶可夢中心補血");
+          }
+        }
+
+        // 如果走到道館2
+        while (user[i].getpo() == 10 && user[i].getgym2() == 0) {// 判斷當前為第10格，且玩家尚未擁有此道館徽章
+          int power = 0;// 戰鬥力加總
+          for (int j = 0; j <= 23; j++) {// 判斷所有的格子，如果是玩家所擁有的寶可夢，則將擁有的寶可夢血量加起來
+            if (poke[j].getowner() == i) {
+              power += poke[j].getcost();
+            }
+          }
+          // 如果戰力加總大於道館戰力則獲勝，小於則去寶可夢中心
+          if (power >= poke[1].getgym()) {// 如果戰勝道館
+            user[i].setgym2(1);// 給予當前玩家此道館徽章
+            user[i].setgym_complete(user[i].getgym_complete() + 1);// 當前玩家徽章擁有數+1
+            System.out.println("恭喜你打贏道館！！");
+            System.out.println("目前徽章數為" + user[i].getgym_complete());
+          } else {
+            user[i].setpo(12);// 將當前玩家送到寶可夢中心
+            System.out.println("挑戰道館失敗，回到寶可夢中心補血");
+          }
+        }
+
+        // 如果走到道館3
+        while (user[i].getpo() == 16 && user[i].getgym3() == 0) {// 判斷當前為第16格，且玩家尚未擁有此道館徽章
+          int power = 0;// 戰鬥力加總
+          for (int j = 0; j <= 23; j++) {// 判斷所有的格子，如果是玩家所擁有的寶可夢，則將擁有的寶可夢血量加起來
+            if (poke[j].getowner() == i) {
+              power += poke[j].getcost();
+            }
+          }
+          // 如果戰力加總大於道館戰力則獲勝
+          if (power >= poke[2].getgym()) {// 如果戰勝道館
+            user[i].setgym3(1);// 給予當前玩家此道館徽章
+            user[i].setgym_complete(user[i].getgym_complete() + 1);// 當前玩家徽章擁有數+1
+            System.out.println("恭喜你打贏道館！！");
+            System.out.println("目前徽章數為" + user[i].getgym_complete());
+          } else {
+            user[i].setpo(12);// 將當前玩家送到寶可夢中心
+            System.out.println("挑戰道館失敗，回到寶可夢中心補血");
+          }
+        }
+
+        // 如果走到道館4
+        while (user[i].getpo() == 22 && user[i].getgym4() == 0) {// 判斷當前為第22格，且玩家尚未擁有此道館徽章
+          int power = 0;// 戰鬥力加總
+          for (int j = 0; j <= 23; j++) {// 判斷所有的格子，如果是玩家所擁有的寶可夢，則將擁有的寶可夢血量加起來
+            if (poke[j].getowner() == i) {
+              power += poke[j].getcost();
+            }
+          }
+          // 如果戰力加總大於道館戰力則獲勝
+          if (power >= poke[3].getgym()) {// 如果戰勝道館
+            user[i].setgym4(1);// 給予當前玩家此道館徽章
+            user[i].setgym_complete(user[i].getgym_complete() + 1);// 當前玩家徽章擁有數+1
+            System.out.println("恭喜你打贏道館！！");
+            System.out.println("目前徽章數為" + user[i].getgym_complete());
+          } else {
+            user[i].setpo(12);// 將當前玩家送到寶可夢中心
+            System.out.println("挑戰道館失敗，回到寶可夢中心補血");
+          }
+        }
+
+        // 如果走到命運
+        if (user[i].getpo() == 21) {// 判斷當前玩家走到第21格
+          int f_dice = 0;
+          f_dice = (int) (Math.random() * 3) + 1;// 從命運隨機抽出一事件
+          switch (f_dice) {
+          // 扣血類事件
+          case 1:
+          case 2:
+          case 3:
+            fortune_print = fortune_name[f_dice];// 打印出事件內容
+            user[i].sethp(user[i].gethp() + fortune_blood[f_dice]);// 依事件減去當前玩家血量
+            System.out.println("命運事件為：" + f_dice);
+            break;
+          }
+        }
+
+        // 如果走到機會
+        if (user[i].getpo() == 3) {// 判斷當前玩家走到第3格
+          int c_dice = 0;
+          c_dice = (int) (Math.random() * 3) + 1;// 從機會隨機抽出一事件
+          switch (c_dice) {
+          // 加血類事件
+          case 1:
+          case 2:
+          case 3:
+            chance_print = chance_name[c_dice];// 打印出事件內容
+            user[i].sethp(user[i].gethp() + chance_blood[c_dice]);// 依事件增加當前玩家血量
+            System.out.println("機會事件為：" + c_dice);
+            break;
+          }
+        }
+
+        // 如果到達寶可夢中心
+        if (user[i].getpo() == 12) {// 如果走到第12格
+          user[i].sethp(user[i].gethp() + 2000);
+          System.out.println("到達寶可夢中心回2000血");
+        }
+        if (user[i].gethp() > 99999) {// 如果玩家血量超過99999會打印地圖會錯誤
+          user[i].sethp(99999);
+          System.out.println("玩家血量上限為99999，不能再多了");
+        }
+
+        System.out.println("目前血量為：" + user[i].gethp());
+
+        // 如果此玩家打贏所有道館
+        if (user[i].getgym_complete() == 4) {
+          System.out.println(user[i].getname() + "打贏了所有道館");
+          for (int j = 0; j <= player_qty-1; j++) {// 其他玩家血量歸零
+            if (j != i) {
+              user[j].setlive(0);// 血量歸零
+              final_qty -= 1;// 玩家人數-1
+            }
+          }
+        }
+
+        // 如果玩家沒血量
+        if (user[i].gethp() <= 0) {
+          user[i].setlive(0);
+          System.out.println("玩家" + user[i].getname() + "被擊倒了");
+          user[i].sethp(0);// 血量歸零，不然負數會導致顯示錯誤
+          final_qty -= 1;// 玩家人數-1
+          for (int j = 0; j <= 23; j++) {// 放生所持有的全部寶可夢
+            if (poke[j].getowner() == i) {
+              poke[j].setowner(99);
+              System.out.println(poke[j].getname() + "被放生了");
+            }
+          }
+        }
+
+        // 顯示地圖+顯示資料
+
+        // 打印玩家所在位置+寶可夢血量
+        for (int j = 0; j <= 23; j++) {// 每一格格子都要做判斷
+          int[] a = new int[5];// 暫存用數字
+          String[] b = new String[5];// 暫存用字串
+          a[4] = poke[j].getcost() / 10000;// 取萬位數
+          a[3] = (poke[j].getcost() / 1000) % 10;// 取千位數
+          a[2] = (poke[j].getcost() / 100) % 10;// 取百位數
+          a[1] = (poke[j].getcost() % 100) / 10;// 取十位數
+          a[0] = poke[j].getcost() % 10;// 取個位數
+          for (int k = 0; k <= 4; k++) {
+            b[k] = no[a[k]];// 將數字轉成字串，且以全形數字顯示
+          }
+          pokemon_cost_print[j] = b[4] + b[3] + b[2] + b[1] + b[0];// 印寶可夢的血量
+
+          // 印玩家所在位置
+          player_po_print[j] = "";
+          for (int x = 0; x <= 3; x++) {
+            if (x == 0) {
+              if (user[x].getpo() == j && user[x].getlive() == 1) {
+                player_po_print[j] += "Ａ　";// 如果玩家一在此格，則印出A + 一個全形空白
+              } else {
+                player_po_print[j] += "　　";// 如果沒人，則印出兩個全形空百，以確保地圖排版正確
+              }
+            } else if (x == 1) {
+              if (user[x].getpo() == j && user[x].getlive() == 1) {
+                player_po_print[j] += "Ｂ　";// 如果玩家二在此格，則印出B + 一個全形空白
+              } else {
+                player_po_print[j] += "　　";// 如果沒人，則印出兩個全形空百，以確保地圖排版正確
+              }
+            } else if (x == 2) {
+              if (user[x].getpo() == j && user[x].getlive() == 1) {
+                player_po_print[j] += "Ｃ　";// 如果玩家三在此格，則印出C + 一個全形空白
+              } else {
+                player_po_print[j] += "　　";// 如果沒人，則印出兩個全形空百，以確保地圖排版正確
+              }
+            } else if (x == 3) {
+              if (user[x].getpo() == j && user[x].getlive() == 1) {
+                player_po_print[j] += "Ｄ";// 如果玩家四在此格，則印出D
+              } else {
+                player_po_print[j] += "　";// 如果沒人，則印出一個全形空百，以確保地圖排版正確
+              }
+            }
+          }
+
+          // 打印寶可夢擁有者
+          if (poke[j].getowner() == 0 && poke[j].getcost() != 0) {
+            pokemon_owner_print[j] = "訓練家：玩家Ａ";
+          } else if (poke[j].getowner() == 1 && poke[j].getcost() != 0) {
+            pokemon_owner_print[j] = "訓練家：玩家Ｂ";
+          } else if (poke[j].getowner() == 2 && poke[j].getcost() != 0) {
+            pokemon_owner_print[j] = "訓練家：玩家Ｃ";
+          } else if (poke[j].getowner() == 3 && poke[j].getcost() != 0) {
+            pokemon_owner_print[j] = "訓練家：玩家Ｄ";
+          } else if (poke[j].getowner() == 99 && poke[j].getcost() != 0) {
+            pokemon_owner_print[j] = "　野生寶可夢　";
+          } else {
+            pokemon_owner_print[j] = "　　　　　　　";
+          }
+        }
+
+        // 打印玩家血量
+        for (int j = 0; j <= 3; j++) {
+          int[] a = new int[5];// 暫存用數字
+          String[] b = new String[5];// 暫存用字串
+          a[4] = user[j].gethp() / 10000;// 取萬位數
+          a[3] = (user[j].gethp() / 1000) % 10;// 取千位數
+          a[2] = (user[j].gethp() / 100) % 10;// 取百位數
+          a[1] = (user[j].gethp() % 100) / 10;// 取十位數
+          a[0] = user[j].gethp() % 10;// 取個位數
+          for (int k = 0; k <= 4; k++) {
+            b[k] = no[a[k]];// 將數字轉成字串，且以全形數字顯示
+          }
+          player_hp_print[j] = b[4] + b[3] + b[2] + b[1] + b[0];// 印玩家的血量
+        }
+
+        // 打印道館血量
+        for (int j = 0; j <= 3; j++) {
+          int[] a = new int[5];// 暫存用數字
+          String[] b = new String[5];// 暫存用字串
+          a[4] = poke[j].getgym() / 10000;// 取萬位數
+          a[3] = (poke[j].getgym() / 1000) % 10;// 取千位數
+          a[2] = (poke[j].getgym() / 100) % 10;// 取百位數
+          a[1] = (poke[j].getgym() % 100) / 10;// 取十位數
+          a[0] = poke[j].getgym() % 10;// 取個位數
+          for (int k = 0; k <= 4; k++) {
+            b[k] = no[a[k]];// 將數字轉成字串，且以全形數字顯示
+          }
+          pokemon_gym_print[j] = b[4] + b[3] + b[2] + b[1] + b[0];// 印道館的血量
+        }
+
+        // 打印玩家所持有徽章
+        for (int x = 0; x <= 3; x++) {
+          player_gym_print[x] = "";
+          for (int y = 0; y <= 3; y++) {
+            if (y == 0) {
+              if (user[x].getgym1() == 1) {
+                player_gym_print[x] += "Ｇ";// 如果玩家擁有道館一徽章，則印出徽章
+              } else {
+                player_gym_print[x] += "　";// 如果沒有，則印出一個全形空百，以確保地圖排版正確
+              }
+            } else if (y == 1) {
+              if (user[x].getgym2() == 1) {
+                player_gym_print[x] += "Ｙ　";// 如果玩家擁有道館二徽章，則印出徽章 + 一個全形空白
+              } else {
+                player_gym_print[x] += "　　";// 如果沒人，則印出兩個全形空百，以確保地圖排版正確
+              }
+            } else if (y == 2) {
+              if (user[x].getgym3() == 1) {
+                player_gym_print[x] += "Ｍ";// 如果玩家擁有道館三徽章，則印出徽章
+              } else {
+                player_gym_print[x] += "　";// 如果沒人，則印出一個全形空百，以確保地圖排版正確
+              }
+            } else if (y == 3) {
+              if (user[x].getgym4() == 1) {
+                player_gym_print[x] += "Ｓ";// 如果玩家擁有道館四徽章，則印出徽章
+              } else {
+                player_gym_print[x] += "　";// 如果沒人，則印出一個全形空百，以確保地圖排版正確
+              }
+            }
+          }
+        }
+
+        print_board(user, poke);// 顯示地圖
+        System.out.println();// 空一行
+
+        i++;// 跳過，換下一位
+
+        if (i > player_qty - 1) {// 如果輪到第五位玩家，則回到第一位，不用管死人
+          i = 0;// 輪到第一位玩家
+          turn += 1;// 回合數加一
+        }
+      } else {
+        i++;// 跳過，換下一位
+      }
+    }
+    // 計算贏家是誰
+    for (int j = 0; j < player_qty; j++) {
+      if (user[j].getlive() == 1) {
+        winner = j;
+      }
+    }
+    System.out.println("遊戲結束" + user[winner].getname() + "大勝利");
+  }
+}
