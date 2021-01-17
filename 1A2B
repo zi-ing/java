@@ -1,0 +1,76 @@
+//1A2B，猜出四個不同的數字的遊戲
+import java.util.Scanner;
+
+class Main {
+  public static void main(String[] args) {
+    int [] a=new int [4];//電腦答案
+    int [] b=new int [4];//玩家答案
+    int ansA=0;//玩家猜出對的A的數量
+    int ansB=0;//玩家猜出對的B的數量
+    int userAns=0000;//玩家答案預設值
+    int time=1;//回合數
+    Scanner sc = new Scanner(System.in);
+
+    for(int i=0;i<=3;i++){
+      a[i] = (int) (Math.random()*9);//從0~9，產生第一個數字
+      if(i==1){
+        while(a[1]==a[0]){//第二個數字不能跟第一個一樣
+          a[i] = (int) (Math.random()*9);
+        }          
+      }else if(i==2){
+        while(a[2]==a[1] || a[2]==a[0]){//第三個數字不能跟第一、二個一樣
+          a[i] = (int) (Math.random()*9);
+        }
+      }else if(i==3){
+        while(a[3]==a[2] || a[3]==a[1] || a[3]==a[0]){//第四個數字不能跟第一、二、三個一樣
+          a[i] = (int) (Math.random()*9);
+        }
+      }
+    }
+    System.out.println("答案是" + a[0] + a[1] + a[2] + a[3]);//方便用，確認電腦順利產生答案
+
+    do{
+      ansA=0;//重置A
+      ansB=0;//重置B
+      int flag=0;//確認使用者4個數字都不一樣
+
+      do{
+        flag=0;
+        do{
+          System.out.println("第" + time + "次");
+          System.out.print("請輸入四個不同的數字：");
+          userAns = sc.nextInt();
+        }while(userAns<0 || userAns>9999 );
+
+        b[0] = userAns/1000; //取出千位數
+        b[1] = (userAns/100)%10; //取出百位數
+        b[2] = (userAns%100)/10; //取出十位數
+        b[3] = userAns%10; //取出個位數
+        for(int i=0;i<=2;i++){
+          for(int j=i+1;j<=3;j++){
+            if(b[i]!=b[j]){
+              flag+=1;
+            }
+          }
+        }
+      }while(flag!=6);//當flag=6時，代表數字都不一樣
+
+      time+=1;//回合數+1
+      for(int i=0;i<=3;i++){
+        for(int j=0;j<=3;j++){
+          if(b[i]==a[j] && i==j){//如果數字一樣，位置一樣，A+1
+            ansA += 1;
+          }else if(b[i]==a[j] && i!=j){//如果數字一樣，位置不一樣，B+1
+            ansB += 1;
+          }
+        }
+      }
+      System.out.println(ansA + "A" + ansB + "B");
+      System.out.println();//空行
+    }while(ansA != 4);//當A的數量為4時，跳出迴圈
+
+    time-=1;
+    System.out.println("第" + time + "次");
+    System.out.print("恭喜答對：" + a[0] + a[1] + a[2] + a[3]);//顯示回答正確
+  }
+}
